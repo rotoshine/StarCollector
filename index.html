@@ -2,9 +2,15 @@
 <head>
 	<meta charset="utf-8">
 	<title>Phaser Sample</title>
+	<style>
+		button{
+			width:100px;
+			height:50px;
+		}
+	</style>
 </head>
 <body>
-	<canvas></canvas>
+	<div id="phaser"></div>
 	<button id="left-button">←</button>
 	<button id="right-button">→</button>
 	<button id="jump-button">JUMP</button>
@@ -13,7 +19,7 @@
 	<script src="/bower_components/phaser-official/build/phaser.js"></script>	
 	<script>
 	var socket = io();
-	var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', {
+	var game = new Phaser.Game(800, 600, Phaser.AUTO, 'phaser', {
 		preload: preload, 
 		create: create, 
 		update: update
@@ -166,26 +172,34 @@
 	});
 
 	// touch event 
-	$('#left-button').on('mousedown', function(){
+	$('#left-button').on('touchstart', function(e){
 		virtualKeys = {
 			isLeftDown: true
 		};
+	})
+	$('#left-button').on('touchend', function(){
+		virtualKeys = {
+			isLeftDown: false
+		};
 	});
-	$('#right-button').on('mousedown', function(){
+	
+	$('#right-button').on('touchstart', function(e){
 		virtualKeys = {
 			isRightDown: true
 		};
+	})
+	$('#right-button').on('touchend', function(){
+		virtualKeys = {
+			isRightDown: false
+		};
 	});
-	$('#jump-button').on('click', function(){
+	$('#jump-button').on('touchstart', function(e){
 		virtualKeys = {
 			isJumpDown: true
 		};
-	});
-	$(window).on('mouseup', function(){
-		// key reset
+	})
+	$('#jump-button').on('touchend', function(){
 		virtualKeys = {
-			isLeftDown: false,
-			isRightDown: false,
 			isJumpDown: false
 		};
 	});
